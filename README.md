@@ -1,2 +1,2 @@
-# gomoku
-gomoku game
+# Gomoku
+**Made by Daniel M, and Nathan L**
