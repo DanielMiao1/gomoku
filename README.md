@@ -1,2 +1,2 @@
 # Gomoku
-**Made by Daniel M, and Nathan L**
+**Made by Nathan L and Daniel M**
