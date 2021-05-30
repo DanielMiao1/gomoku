@@ -16,4 +16,24 @@
 # gets all the available moves on the board (empty spaces)
 # checks if a player has won
 
-# PIECES ØX
+# PIECES Ø X
+
+class Game:
+  def __init__(self):
+    self.print_intro()
+  
+  @staticmethod
+  def print_intro():
+    print("Gomoku Game")
+
+class Player(Game):
+  def __init__(self):
+    print("Player class")
+
+class Board(Game):
+  def __init__(self):
+    print("Board class")
+
+if __name__ == "___main__":
+  g = Game()
+  g.start_game()
