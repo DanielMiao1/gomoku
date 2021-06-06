@@ -17,56 +17,67 @@
 # gets all the available moves on the board (empty spaces)
 # checks if a player has won
 
-# PIECES Ø X
+# PIECES O X
 
 class Game:
   def __init__(self):
-    self.start_game()
+    self.board = Board()
   
   @staticmethod
-  def print_intro():
-    print("Gomoku Game")
+  def print_intro(): print("Gomoku Game")
 
   def start_game(self):
     self.print_intro()
-    players, choices, board, turn = [Player(), Player()], ("X", "O"), Board(), False
-    player_won = board.player_won()
+    players, choices, turn = [Player(), Player()], ["X", "O"], False
+    player_won = self.board.has_player_won()
     while not player_won:
-      board.print_board()
-      print(f"It is {choices[int(turn)]} ({['Player 1', 'Player 2'][choices[int(turn)]]})'s turn'")
+      self.board.print_board()
+      print(
+        f"It is {choices[int(turn)]}"
+        f" ({['Player 1', 'Player 2'][int(turn)]})'s turn."
+      )
       while True:
         row, col = players[int(turn)].get_move()
-        if board.board[row - 1][col - 1] == " ": break
+        if self.board.board[row - 1][col - 1] == " ": break
         print("Invalid Input")
-      board.board[row - 1][col - 1] = choices[int(turn)]
+      self.board.board[row - 1][col - 1] = choices[int(turn)]
       turn = not turn
+      player_won = self.board.has_player_won()
+    print(player_won)
 
 class Player:
   def get_move(self):
-		row = int(input("Row:"))  
-		column = int(input("Column:"))
-		if 0 < row < 13 and 0 < column < 13: 
-			return (row,column)
+    try:
+      row, column = int(input("Row: ")), int(input("Column: "))
+      if 0 < row < 13 and 0 < column < 13: return (row,column)
+    except: pass
+
+    print("Invalid input")
+    return self.get_move()
       
-		return self.get_move()
+      
 
 class Board:
   def __init__(self):
-    self.board = [[0 for i in range(12)] for _ in range(12)]
+    self.board = [[" " for i in range(12)] for _ in range(12)]
 
   def has_player_won(self):
     """Return the player if one won"""
-    return "FUNCTION has_player_won"
+    for i in range(5):
+      if self.board[i][0] == self.board[i][1] == self.board[i][2] == self.board[i][3] == self.board[i][4] and self.board[i][0] != " ": return self.board[i][0]
+    # if any([True for i in range(5) if board[i][0] == board[i][1] == board[i][2] == board[i][3] == board[i][4] and board[i][0] != " "]):
+    # return (board[0][0] == board[1][1] == board[2][2] and board[0][0] != " ") or (board[0][2] == board[1][1] == board[2][0] and board[0][2] != " ") or any([True for i in range(5) if board[i][0] == board[i][1] == board[i][2] and board[i][0] != " "]) or any([True for i in range(3) if board[0][i] == board[1][i] == board[2][i] and board[0][i] != " "])
+    return False
 
-  def get_valid_moves(self):
-    return "FUNCTION get_valid_moves"
-
-  def place_move(self):
-    return "FUNCTION place_move"
+  @staticmethod
+  def format_board(board): return "\n--+---+---+---+---+---+---+---+---+---+---+--\n".join(" | ".join(i) for i in board)
 
   def print_board(self):
-    pass
+    print(self.format_board(self.board))
 
-if __name__ == "___main__":
-  g = Game()
-  g.start_game()
+# i for in ["".join([str(row) for row in self.board])]
+
+
+
+g = Game()
+g.start_game()
